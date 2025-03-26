@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using System.Text;
+using OnlineShop.Models;
 
 namespace OnlineShop.Controllers;
 

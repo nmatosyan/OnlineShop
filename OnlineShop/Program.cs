@@ -1,6 +1,8 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.BLL;
+using OnlineShop.Core;
+using OnlineShop.DAL;
+ 
 namespace OnlineShop;
 
 public class Program
@@ -9,48 +11,34 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // 1. Настройка строки подключения
+        // services
+        builder.Services.AddScoped<IProductRepository, InMemoryProductRepository>();
+        builder.Services.AddScoped<IOrderRepository, InMemoryOrderRepository>();
+        builder.Services.AddScoped<ProductService>();
+        builder.Services.AddScoped<OrderService>();
+
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-        // 2. Регистрация DbContext с использованием PostgreSQL
         builder.Services.AddDbContext<StoreDbContext>(options =>
             options.UseNpgsql(connectionString));
 
-        // 3. Добавление сервисов контроллеров
+        // add controllers
         builder.Services.AddControllers();
 
-        // 4. Добавление Swagger для документирования API
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-
-        // 5. Настройка CORS (по желанию)
-        builder.Services.AddCors(options =>
-        {
-            options.AddPolicy("AllowAll", policy =>
-            {
-                policy.AllowAnyOrigin()
-                      .AllowAnyMethod()
-                      .AllowAnyHeader();
-            });
-        });
-
+        
         var app = builder.Build();
 
-        // 6. Использование Swagger (в режиме разработки)
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI();
         }
 
-        // 7. Включение CORS
-        app.UseCors("AllowAll");
-
-        // 8. Маршрутизация запросов
         app.UseAuthorization();
         app.MapControllers();
 
-        // 9. Запуск приложения
         app.Run();
     }
 }
