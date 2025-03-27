@@ -1,4 +1,5 @@
-﻿using Chess.Pieces;
+﻿using Chess.ChessGame;
+using Chess.Pieces;
 
 namespace Chess;
 
@@ -92,5 +93,73 @@ public class Board
             Console.WriteLine("Invalid move");
             return false;
         }
+
+       
+    }
+
+    public bool IsKingInCheck(bool isWhite)
+    {
+        int kingX = -1, kingY = -1;
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                var piece = this.Squares[x, y];
+                if (piece != null && piece is King && piece.IsWhite == isWhite)
+                {
+                    kingX = x;
+                    kingY = y;
+                }
+            }
+        }
+
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                var enemyPiece = this.Squares[x, y];
+                if (enemyPiece != null && enemyPiece.IsWhite != isWhite)
+                {
+                    if (enemyPiece.CanMove(this, x, y, kingX, kingY))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public bool HasAnyLegalMove(bool isWhite)
+    {
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                var piece = this.Squares[x, y];
+                if (piece != null && piece.IsWhite == isWhite)
+                {
+                    for (int newX = 0; newX < 8; newX++)
+                    {
+                        for (int newY = 0; newY < 8; newY++)
+                        {
+                            if (piece.CanMove(this, x, y, newX, newY))
+                            {
+                                var saved = this.Squares[newX, newY];
+                                this.Squares[newX, newY] = piece;
+                                this.Squares[x, y] = null;
+                                bool check = IsKingInCheck(isWhite);
+
+                                this.Squares[x, y] = piece;
+                                this.Squares[newX, newY] = saved;
+
+                                if (!check)
+                                    return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
