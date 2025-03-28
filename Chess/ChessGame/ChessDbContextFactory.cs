@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Chess.ChessGame
 {
-    public class DotNetPagingDbContextFactory : IDesignTimeDbContextFactory<ChessDbContext>
+    public class ChessDbContextFactory : IDesignTimeDbContextFactory<ChessDbContext>
     {
         private static string? _connectionString;
 
@@ -19,7 +19,7 @@ namespace Chess.ChessGame
             return CreateDbContext(null);
         }
 
-        public ChessDbContext CreateDbContext(string[]? args)
+        public ChessDbContext CreateDbContext(string[]? args = null)
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
@@ -29,7 +29,7 @@ namespace Chess.ChessGame
             var builder = new DbContextOptionsBuilder<ChessDbContext>();
             builder.UseNpgsql(_connectionString);
 
-            return new ChessDbContext(builder.Options);
+            return new ChessDbContext();
         }
 
         private static void LoadConnectionString()

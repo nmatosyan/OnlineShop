@@ -70,7 +70,7 @@ public class Board
         return (row, col);
     }
 
-    public bool MovePiece(string from, string to)
+    public bool MovePiece(string from, string to, bool IsWhite)
     {
         var (startX, startY) = ParsePosition(from);
         var (endX, endY) = ParsePosition(to);

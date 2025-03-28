@@ -1,16 +1,26 @@
-﻿using Chess.CHessGame;
+﻿using Chess.ChessGame;
+using Chess.CHessGame;
 using Chess.Pieces;
 
 namespace Chess;
 
 public class Game
 {
-    private Board board = new Board();    
-    
+    private Board board = new Board();
+
     private bool isWhiteTurn = true;
 
     public void Start()
     {
+        //using (var db = new ChessDbContext())
+        //{
+        //    var games = db.ChessGames.ToList();
+        //    foreach (var game in games)
+        //    {
+        //        Console.WriteLine($"{game.Moves} {game.Date}");
+        //    }
+        //}
+
         board.Initialize();
 
         while (true)
@@ -28,7 +38,7 @@ public class Game
             var parts = input.Split(' ');
             if (parts.Length == 2)
             {
-                if (board.MovePiece(parts[0], parts[1]))
+                if (board.MovePiece(parts[0], parts[1], isWhiteTurn))
                 {
                     isWhiteTurn = !isWhiteTurn;
                 }
@@ -38,8 +48,14 @@ public class Game
                     Console.ReadKey();
                 }
             }
-             
-           
+
+            using (var db = new ChessDbContext())
+            {
+                var game = new ChessGameDb { Moves = allMoves.Trim(), Date = DateTime.UtcNow };
+                db.ChessGames.Add(game);
+                db.SaveChanges();
+                Console.WriteLine("Партия сохранена в базу данных!");
+            }
 
             //if (board.IsKingInCheck(true))
             //{
@@ -60,5 +76,6 @@ public class Game
             //}
 
         }
+     
     }
 }

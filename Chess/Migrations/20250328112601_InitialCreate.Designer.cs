@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Chess.Migrations
 {
     [DbContext(typeof(ChessDbContext))]
-    [Migration("20250327131003_InitialCreate")]
+    [Migration("20250328112601_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Chess.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Chess.CHessGame.ChessGame", b =>
+            modelBuilder.Entity("Chess.CHessGame.ChessGameDb", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace Chess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
+                    b.ToTable("ChessGames");
                 });
 #pragma warning restore 612, 618
         }
