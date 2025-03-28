@@ -2,7 +2,7 @@
 {
     public class King : Piece
     {
-        Board board = new Board();
+       // Board board = new Board();
         public King(bool IsWhite) : base(IsWhite)
         {
             Symbol = IsWhite ? '♚' : '♔';

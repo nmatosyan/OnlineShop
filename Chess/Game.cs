@@ -1,4 +1,5 @@
-﻿using Chess.Pieces;
+﻿using Chess.CHessGame;
+using Chess.Pieces;
 
 namespace Chess;
 
@@ -17,6 +18,7 @@ public class Game
             Console.Clear();
             board.Print();
             Console.WriteLine($"{(isWhiteTurn ? "White" : "Black")}'s turn. Enter move (e.g. e2 e4): ");
+            string allMoves = "";
             var input = Console.ReadLine();
             if (input == null)
             {
@@ -36,6 +38,8 @@ public class Game
                     Console.ReadKey();
                 }
             }
+             
+           
 
             //if (board.IsKingInCheck(true))
             //{

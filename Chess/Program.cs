@@ -1,4 +1,4 @@
-﻿using Chess.ChessGame;
+﻿using Chess.CHessGame;
 
 namespace Chess;
 
@@ -7,7 +7,6 @@ internal class Program
     static void Main(string[] args)
     {
         Game game = new Game();
-        game.Start();
-      
+        game.Start();      
     }
 }
