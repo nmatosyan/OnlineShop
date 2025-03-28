@@ -53,8 +53,16 @@ public class Game
             {
                 var game = new ChessGameDb { Moves = allMoves.Trim(), Date = DateTime.UtcNow };
                 db.ChessGames.Add(game);
-                db.SaveChanges();
-                Console.WriteLine("Партия сохранена в базу данных!");
+                db.SaveChanges();                
+            }
+
+            using (var db = new ChessDbContext())
+            {
+                var games = db.ChessGames.ToList();
+                foreach (var game in games)
+                {
+                    Console.WriteLine($"Game #{game.Id}: {game.Moves} ({game.Date})");
+                }
             }
 
             //if (board.IsKingInCheck(true))
