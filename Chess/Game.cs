@@ -7,20 +7,11 @@ namespace Chess;
 public class Game
 {
     private Board board = new Board();
-
+    
     private bool isWhiteTurn = true;
 
     public void Start()
-    {
-        //using (var db = new ChessDbContext())
-        //{
-        //    var games = db.ChessGames.ToList();
-        //    foreach (var game in games)
-        //    {
-        //        Console.WriteLine($"{game.Moves} {game.Date}");
-        //    }
-        //}
-
+    {       
         board.Initialize();
 
         while (true)
@@ -35,6 +26,11 @@ public class Game
                 continue;
             }
 
+            else
+            {
+                allMoves += input;
+            }
+
             var parts = input.Split(' ');
             if (parts.Length == 2)
             {
@@ -42,6 +38,7 @@ public class Game
                 {
                     isWhiteTurn = !isWhiteTurn;
                 }
+
                 else
                 {
                     Console.WriteLine("Try again");
@@ -65,6 +62,7 @@ public class Game
                 }
             }
 
+
             //if (board.IsKingInCheck(true))
             //{
             //    if (board.HasAnyLegalMove(true))
@@ -83,7 +81,6 @@ public class Game
             //    Console.WriteLine("Pat! Draw.");
             //}
 
-        }
-     
+        }    
     }
 }

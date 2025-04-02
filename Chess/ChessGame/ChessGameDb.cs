@@ -12,7 +12,7 @@ namespace Chess.CHessGame
     {
         public int Id { get; set; }
         public string? Moves { get; set; }
-        public DateTime Date { get; set; }       
+        public DateTime Date { get; set; }      
     }
 
     public class ChessDbContext : DbContext

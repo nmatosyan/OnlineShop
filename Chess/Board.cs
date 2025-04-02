@@ -88,13 +88,35 @@ public class Board
             Squares[startX, startY] = null;
             return true;
         }
+
+        if (piece is King king && king.CanCastle(startX, endX, startY, endY, this))
+        {
+            bool isShortCastle = (endY == startY + 2);
+
+            Squares[endX, endY] = piece;
+            Squares[startX, startY] = null;
+
+            if (isShortCastle)
+            {
+                Squares[startX, 5] = Squares[startX, 7];
+                Squares[startX, 7] = null;
+            }
+
+            else
+            {
+                Squares[startX, 3] = Squares[startX, 7];
+                Squares[startX, 7] = null;
+            }
+
+            Console.WriteLine("Castle complited!");
+            return true;
+        }
+
         else
         {
             Console.WriteLine("Invalid move");
             return false;
         }
-
-       
     }
 
     public bool IsKingInCheck(bool isWhite)
@@ -104,7 +126,7 @@ public class Board
         {
             for (int y = 0; y < 8; y++)
             {
-                var piece = this.Squares[x, y];
+                var piece = Squares[x, y];
                 if (piece != null && piece is King && piece.IsWhite == isWhite)
                 {
                     kingX = x;
@@ -117,7 +139,7 @@ public class Board
         {
             for (int y = 0; y < 8; y++)
             {
-                var enemyPiece = this.Squares[x, y];
+                var enemyPiece = Squares[x, y];
                 if (enemyPiece != null && enemyPiece.IsWhite != isWhite)
                 {
                     if (enemyPiece.CanMove(this, x, y, kingX, kingY))
@@ -134,7 +156,7 @@ public class Board
         {
             for (int y = 0; y < 8; y++)
             {
-                var piece = this.Squares[x, y];
+                var piece = Squares[x, y];
                 if (piece != null && piece.IsWhite == isWhite)
                 {
                     for (int newX = 0; newX < 8; newX++)
@@ -143,13 +165,13 @@ public class Board
                         {
                             if (piece.CanMove(this, x, y, newX, newY))
                             {
-                                var saved = this.Squares[newX, newY];
-                                this.Squares[newX, newY] = piece;
-                                this.Squares[x, y] = null;
+                                var saved = Squares[newX, newY];
+                                Squares[newX, newY] = piece;
+                                Squares[x, y] = null;
                                 bool check = IsKingInCheck(isWhite);
 
-                                this.Squares[x, y] = piece;
-                                this.Squares[newX, newY] = saved;
+                                Squares[x, y] = piece;
+                                Squares[newX, newY] = saved;
 
                                 if (!check)
                                     return true;
