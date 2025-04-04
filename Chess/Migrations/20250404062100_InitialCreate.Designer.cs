@@ -3,6 +3,7 @@ using System;
 using Chess.CHessGame;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Chess.Migrations
 {
     [DbContext(typeof(ChessDbContext))]
-    partial class ChessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250404062100_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,30 +54,6 @@ namespace Chess.Migrations
                     b.ToTable("ChessGames");
                 });
 
-            modelBuilder.Entity("Chess.CHessGame.MoveDb", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Move")
-                        .HasColumnType("text");
-
-                    b.Property<int>("MoveNumber")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.ToTable("Moves");
-                });
-
             modelBuilder.Entity("Chess.CHessGame.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -108,22 +87,6 @@ namespace Chess.Migrations
                     b.Navigation("BlackPlayer");
 
                     b.Navigation("WhitePlayer");
-                });
-
-            modelBuilder.Entity("Chess.CHessGame.MoveDb", b =>
-                {
-                    b.HasOne("Chess.CHessGame.ChessGameDb", "Game")
-                        .WithMany("MoveList")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("Chess.CHessGame.ChessGameDb", b =>
-                {
-                    b.Navigation("MoveList");
                 });
 
             modelBuilder.Entity("Chess.CHessGame.User", b =>

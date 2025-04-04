@@ -1,4 +1,5 @@
-﻿using Chess.CHessGame;
+﻿using System.Net.NetworkInformation;
+using Chess.CHessGame;
 using Chess.Pieces;
 
 namespace Chess;
@@ -147,6 +148,7 @@ public class Board
                 }
             }
         }
+
         return false;
     }
 
