@@ -17,6 +17,9 @@ public class Queen : Piece
         if (rook.CanMove(board, startX, startY, endX, endY))
             return true;
 
+        if (endX < 0 || endX >= 8 || endY < 0 || endY >= 8)
+            return false;
+
         return Target(board, endX, endY);
     }
 }

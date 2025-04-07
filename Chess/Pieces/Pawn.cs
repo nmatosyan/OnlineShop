@@ -28,6 +28,9 @@ public class Pawn : Piece
                 return true;
         }
 
+        if (endX < 0 || endX >= 8 || endY < 0 || endY >= 8)
+            return false;
+
         return false;
     }
 }

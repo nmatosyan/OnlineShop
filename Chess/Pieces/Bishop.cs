@@ -9,8 +9,16 @@ public class Bishop : Piece
         Symbol = isWhite ? '♝' : '♗';
     }
 
+    public static bool IsInsideBoard(int x, int y)
+    {
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
+    }
+
     public override bool CanMove(Board board, int startX, int startY, int endX, int endY)
     {
+        if (!IsInsideBoard(endX, endY))
+            return false;
+
         int deltaX = Math.Abs(endX - startX);
         int deltaY = Math.Abs(endY - startY);
 
@@ -23,8 +31,11 @@ public class Bishop : Piece
         int x = startX + stepX;
         int y = startY + stepY;
 
-        while (x != endX && y != endY)
+        while (x != endX || y != endY)
         {
+            if (!IsInsideBoard(x, y))
+                return false;
+
             if (board.Squares[x, y] != null)
                 return false;
 
@@ -32,9 +43,7 @@ public class Bishop : Piece
             y += stepY;
         }
 
-        if (board.Squares[endX, endY] == null || board.Squares[endX, endY].IsWhite != this.IsWhite)
-            return true;
-
-        return Target(board, endX, endY);
+        var target = board.Squares[endX, endY];
+        return target == null || target.IsWhite != this.IsWhite;
     }
 }

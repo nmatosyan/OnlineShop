@@ -124,7 +124,7 @@ public class Board
     {
         int kingX = -1, kingY = -1;
         for (int x = 0; x < 8; x++)
-        {
+        {           
             for (int y = 0; y < 8; y++)
             {
                 var piece = Squares[x, y];
@@ -132,20 +132,21 @@ public class Board
                 {
                     kingX = x;
                     kingY = y;
-                }
+                    break;
+                }             
             }
         }
 
         for (int x = 0; x < 8; x++)
         {
             for (int y = 0; y < 8; y++)
-            {
+            {               
                 var enemyPiece = Squares[x, y];
                 if (enemyPiece != null && enemyPiece.IsWhite != isWhite)
                 {
                     if (enemyPiece.CanMove(this, x, y, kingX, kingY))
-                        return true;
-                }
+                        return true;                    
+                }           
             }
         }
 
@@ -162,7 +163,7 @@ public class Board
                 if (piece != null && piece.IsWhite == isWhite)
                 {
                     for (int newX = 0; newX < 8; newX++)
-                    {
+                    {                     
                         for (int newY = 0; newY < 8; newY++)
                         {
                             if (piece.CanMove(this, x, y, newX, newY))
@@ -177,7 +178,7 @@ public class Board
 
                                 if (!check)
                                     return true;
-                            }
+                            }                          
                         }
                     }
                 }

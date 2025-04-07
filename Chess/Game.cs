@@ -113,24 +113,23 @@ public class Game
                 }
             }
 
-            //if (board.IsKingInCheck(true))
-            //{
-            //    if (board.HasAnyLegalMove(true))
-            //    {
-            //        Console.WriteLine("Check!");
-            //    }
+            if (board.IsKingInCheck(true))
+            {
+                if (board.HasAnyLegalMove(true))
+                {
+                    Console.WriteLine("Check!");
+                }
 
-            //    else
-            //    {
-            //        Console.WriteLine("Mat! Game over.");
-            //    }
-            //}
+                else
+                {
+                    Console.WriteLine("Mat! Game over.");
+                }
+            }
 
-            //if (board.IsKingInCheck(false) && board.HasAnyLegalMove(false))
-            //{
-            //    Console.WriteLine("Pat! Draw.");
-            //}
-
+            if (board.IsKingInCheck(false) && board.HasAnyLegalMove(false))
+            {
+                Console.WriteLine("Pat! Draw.");
+            }
         }    
     }
 }
